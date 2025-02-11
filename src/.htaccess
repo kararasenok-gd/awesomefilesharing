@@ -1,0 +1,11 @@
+DirectoryIndex index.php index.html index.htm
+
+php_value date.timezone Europe/Moscow
+ErrorDocument 400 /err/?code=400
+ErrorDocument 401 /err/?code=401
+ErrorDocument 403 /err/?code=403
+ErrorDocument 404 /err/?code=404
+ErrorDocument 405 /err/?code=405
+ErrorDocument 413 /err/?code=413
+ErrorDocument 500 /err/?code=500
+ErrorDocument 503 /err/?code=503

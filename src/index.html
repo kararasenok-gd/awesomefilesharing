@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awesome File Sharing</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="./styles/mobile.css">
+    <link rel="stylesheet" id="loaded-style">
+</head>
+
+<body>
+    <div class="showleftbar" onclick="toggleLeftBar()">
+        <img src="./assets/3bars.svg" alt="" class="bicon">
+    </div>
+    <div class="topbar">
+        <input type="text" name="filename" id="searchbox-filename" placeholder="Что ищем сегодня? [Появится с Хабом]" class="searchbox" disabled>
+        <button id="searchbox-button" disabled>Искать</button>
+
+        <div class="accountBlock">
+            <div class="accountInfo">
+                <img src="./assets/profile.svg" alt="" class="avatar" id="accountAvatar">
+                <span class="name">Зашёл как: <br> @<span id="accountName"></span></span>
+            </div>
+            <div class="controls">
+                <img src="./assets/settings.svg" alt="⚙️" class="icon"> <button id="settings" onclick="loadTab(`settings`)">Настройки</button>
+                <img src="./assets/exit.svg" alt="🚪" class="icon"> <button id="logout" onclick="logout()">Выход</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="leftbar">
+        <div class="logo">
+            <img src="./afs.png" alt="Логотип Awesome File Sharing" class="logo"><br><span class="logo-title">Awesome
+                File Sharing!!! <span id="version">v3.XX.XX.XX</span></span>
+        </div>
+
+        <br><br>
+
+        <div class="menu">
+            <div class="menuItem" onclick="loadTab()">
+                <img src="./assets/home.svg" alt="🏠" class="bicon"> Главная
+            </div>
+            <div class="menuItem" onclick="loadTab(`files`)">
+                <img src="./assets/folder.svg" alt="📂" class="bicon"> Файлы
+            </div>
+            <div class="menuItem" onclick="loadTab(`upload`)">
+                <img src="./assets/upload.svg" alt="📂" class="bicon"> Загрузить
+            </div>
+            <div class="menuItem">
+                <img src="./assets/folder.svg" alt="📂" class="bicon"> Хаб [НЕ СДЕЛАНО]
+            </div>
+        </div>
+    </div>
+
+    <div class="content" id="content">
+        <span class="spinner"></span>
+    </div>
+
+    <script src="./scripts/checkAuth.js"></script>
+    <script src="./scripts/usefulFuncs.js"></script>
+    <script src="./scripts/tabMgr.js"></script>
+    <script src="./scripts/ver.js"></script>
+    <script src="./scripts/leftbar.js"></script>
+    <script id="loaded-script"></script>
+</body>
+
+</html>

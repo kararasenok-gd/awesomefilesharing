@@ -1,0 +1,384 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
+
+:root {
+    --bg: #282828;
+    --txt: #ae9f98;
+    --txt2: #776c66;
+    --elmnt: #3c3836;
+    --elmnt2: #312d2b;
+    --link: #00b7ff;
+    --nsfw: #eb6262;
+    --placehold: #afafaf;
+}
+
+body {
+    font-family: "Manrope", sans-serif;
+    background-color: var(--bg);
+    color: var(--txt);
+}
+
+.topbar {
+    background-color: var(--elmnt);
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-radius: 0 0 10px 10px;
+
+    width: 88%;
+    margin-left: 11%;
+
+    transition: all 0.2s ease-in-out;
+}
+
+.searchbox {
+    background-color: var(--elmnt2);
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    margin-right: 10px;
+
+    width: 75%;
+    height: 45px;
+
+    color: var(--txt);
+    font-size: 28px;
+
+    transition: all 0.2s ease-in-out;
+}
+
+.searchbox::placeholder {
+    color: var(--txt2);
+    font-size: 28px;
+
+    transition: all 0.2s ease-in-out;
+}
+
+.searchbox:focus {
+    background-color: var(--elmnt);
+    outline: #776c66 1px solid;
+
+    transition: all 0.2s ease-in-out;
+}
+
+.searchbox:focus::placeholder {
+    color: transparent;
+
+    transition: all 0.2s ease-in-out;
+}
+
+.icon {
+    width: 16px;
+}
+
+.bicon {
+    width: 35px;
+}
+
+.accountBlock {
+    background-color: var(--elmnt2);
+    border-radius: 5px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    transition: all 0.2s ease-in-out;
+}
+
+.avatar {
+    max-width: 32px;
+    border-radius: 25%;
+}
+
+.accountInfo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#settings,
+#logout {
+    background-color: transparent;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+
+    color: var(--txt);
+
+    transition: all 0.2s ease-in-out;
+}
+
+#settings:hover,
+#logout:hover {
+    transform: scale(1.05);
+}
+
+#settings:active,
+#logout:active {
+    transform: scale(0.9);
+}
+
+#searchbox-button {
+    background-color: var(--elmnt2);
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+
+    width: 200px;
+    height: 55px;
+
+    font-size: 28px;
+
+    color: var(--txt);
+
+    transition: all 0.2s ease-in-out;
+}
+
+#searchbox-button:hover {
+    transform: scale(1.05);
+}
+
+#searchbox-button:active {
+    transform: scale(0.9);
+}
+
+.leftbar {
+    background-color: var(--elmnt);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 9%;
+    height: 95%;
+
+    position: absolute;
+    top: 10px;
+
+    border-radius: 10px;
+
+}
+
+.logo {
+    width: 150px;
+    transition: all 0.2s ease-in-out;
+}
+
+.logo-title {
+    font-size: 18px;
+    transition: all 0.2s ease-in-out;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    height: 30%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+    transition: all 0.2s ease-in-out;
+}
+
+.menuItem {
+    background-color: var(--elmnt2);
+    border-radius: 5px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    height: 50px;
+
+    transition: all 0.2s ease-in-out;
+}
+
+.menuItem:hover {
+    transform: scale(1.05);
+}
+
+.menuItem:active {
+    transform: scale(0.9);
+}
+
+.mainContent {
+    height: 100%;
+}
+
+.content {
+    background-color: var(--elmnt);
+
+    width: 88%;
+    height: 90%;
+    min-height: 83vh;
+    max-height: 83vh;
+
+    padding: 10px;
+    margin-left: 11%;
+    margin-top: 10px;
+
+    border-radius: 10px;
+
+    overflow: auto;
+}
+
+
+a {
+    color: var(--link);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+a:hover {
+    filter: brightness(150%);
+}
+
+a:active {
+    filter: brightness(90%);
+}
+
+
+.nsfw {
+    color: var(--nsfw);
+    text-shadow: 0 0 2px var(--nsfw);
+    transition: all 0.3s ease-in-out;
+}
+
+.placeholder {
+    background-color: var(--placehold);
+    color: var(--placehold);
+
+    border-radius: 13px;
+
+    animation: placeholder-animation 5s infinite;
+    transition: all 0.3s ease-in-out;
+}
+
+@keyframes placeholder-animation {
+    0% {
+        filter: brightness(100%);
+    }
+
+    50% {
+        filter: brightness(50%);
+    }
+
+    100% {
+        filter: brightness(100%);
+    }
+}
+
+button,
+.btn {
+    background-color: #3c3836;
+    color: #d4be98;
+    border: 1px solid #d4be98;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+button:hover,
+.btn:hover {
+    filter: brightness(0.9);
+    transform: scale(1.05);
+    transition: all 0.3s;
+}
+
+button:active,
+.btn:active {
+    transform: scale(0.95);
+    transition: all 0.3s;
+}
+
+button:disabled,
+.btn:disabled {
+    filter: brightness(0.5);
+    cursor: not-allowed;
+}
+
+input[type="file"] {
+    background-color: #3c3836;
+    color: #d4be98;
+    border: 1px solid #d4be98;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+    background-color: #3c3836;
+    color: #d4be98;
+    border: 1px solid #d4be98;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+input[type="file"]:hover {
+    filter: brightness(0.9);
+    transform: scale(1.05);
+}
+
+input[type="file"]:active {
+    transform: scale(0.95);
+}
+
+input[type="file"]:disabled {
+    filter: brightness(0.5);
+    cursor: not-allowed;
+}
+
+.spinner {
+    background-image: url('../assets/load.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    display: block;
+    width: 100px;
+    height: 100px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    z-index: 1;
+
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.showleftbar {
+    display: none;
+
+    position: fixed;
+    top: 20px;
+    left: 20px;
+
+    cursor: pointer;
+
+    z-index: 9999;
+
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    padding: 5px;
+}

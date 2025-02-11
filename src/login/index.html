@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awesome File Sharing - Вход/Регистрация</title>
+    <link rel="stylesheet" href="../styles/login.css">
+    <script src="https://hcaptcha.com/1/api.js" async defer></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="forms-wrapper">
+            <div class="auth-form" id="loginForm">
+                <h2>Вход</h2>
+                <label for="loginUsername">Юзернейм</label>
+                <input type="text" id="loginUsername" required>
+                <label for="loginPassword">Пароль</label>
+                <input type="password" id="loginPassword" required>
+                <button id="loginBtn" disabled>Войти</button>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="auth-form" id="registerForm">
+                <h2>Регистрация</h2>
+                <label for="regUsername">Юзернейм</label>
+                <input type="text" id="regUsername" required>
+                <label for="regPassword">Пароль</label>
+                <input type="password" id="regPassword" required>
+                <label for="regEmail">Email</label>
+                <input type="email" id="regEmail" required>
+                <button id="registerBtn" disabled>Зарегистрироваться</button>
+            </div>
+        </div>
+
+        <div class="captcha-container">
+            <div class="h-captcha" data-sitekey="05a2ac4e-50ac-489c-afe4-cfec231200c6" data-callback="onCaptchaSuccess">
+            </div>
+        </div>
+    </div>
+
+    <div class="notification hide" id="notification">
+        <h3 id="notificationText"></h3>
+    </div>
+
+
+    <script src="../scripts/login.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,5 @@
+DirectoryIndex index.php index.html index.htm
+
+php_value date.timezone Europe/Moscow
+ErrorDocument 403 /index.php?err=403
+ErrorDocument 404 /index.php?err=404

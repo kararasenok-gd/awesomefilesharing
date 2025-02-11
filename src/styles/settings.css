@@ -1,0 +1,33 @@
+#deleteAccount {
+    color: var(--nsfw);
+    border-color: var(--nsfw);
+}
+
+input {
+    background-color: var(--elmnt);
+    color: var(--txt);
+
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solid var(--txt2);
+
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    border-color: #d4be98;
+    outline: none;
+    box-shadow: 0 0 8px rgba(212, 190, 152, 0.2);
+
+    transition: all 0.3s ease;
+}
+
+input::placeholder {
+    color: var(--placehold);
+
+    transition: all 0.3s ease;
+}
+
+hr {
+    border: 1px solid var(--txt2);
+}
