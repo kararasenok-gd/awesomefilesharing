@@ -13,14 +13,12 @@
 </body>
 </html>
 
-
 <?php
 $config = require './api/config.php';
 require './api/vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// Проверка наличия данных
 if (!isset($_POST['username'], $_POST['password'], $_POST['email'])) {
     die("Заполните все поля: имя пользователя, пароль и email.");
 }
@@ -29,7 +27,6 @@ $username = $_POST['username'];
 $password = $_POST['password'];
 $email = $_POST['email'];
 
-// Подключение к БД
 $mysqli = new mysqli(
     $config['database']['host'],
     $config['database']['user'],
@@ -40,7 +37,6 @@ if ($mysqli->connect_error) {
     die("Ошибка подключения к БД: " . $mysqli->connect_error);
 }
 
-// Поиск пользователя
 $stmt = $mysqli->prepare("SELECT id, password, email FROM users WHERE username = ?");
 $stmt->bind_param("s", $username);
 $stmt->execute();
@@ -50,17 +46,14 @@ if ($result->num_rows === 0) {
 }
 $user = $result->fetch_assoc();
 
-// Проверка пароля
 if (md5($password) !== $user['password']) {
     die("Неверный пароль.");
 }
 
-// Проверка текущего email
 if (!empty($user['email'])) {
     die("Email уже привязан к аккаунту.");
 }
 
-// Проверка занятости email
 $stmt = $mysqli->prepare("SELECT id FROM users WHERE email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
@@ -68,7 +61,6 @@ if ($stmt->get_result()->num_rows > 0) {
     die("Email уже занят.");
 }
 
-// Генерация кода
 $verificationCode = bin2hex(random_bytes(64));
 $stmt = $mysqli->prepare("INSERT INTO codes (user_id, code) VALUES (?, ?)");
 $stmt->bind_param("is", $user['id'], $verificationCode);
@@ -76,7 +68,12 @@ if (!$stmt->execute()) {
     die("Ошибка сохранения кода.");
 }
 
-// Отправка письма
+$stmt = $mysqli->prepare("UPDATE users SET email = ?, active = 0 WHERE id = ?");
+$stmt->bind_param("si", $email, $user['id']);
+if (!$stmt->execute()) {
+    die("Ошибка обновления данных пользователя.");
+}
+
 $mail = new PHPMailer(true);
 try {
     $mail->isSMTP();
