@@ -131,8 +131,8 @@ function uploadFiles() {
                         const p = document.createElement('p');
                         p.textContent = `Файл ${file.name} успешно загружен! `;
                         const a = document.createElement('a');
-                        a.href = `http://test.awesomefilesharing.rf.gd/file/?name=${data.filename}`;
-                        a.innerHTML = `http://test.awesomefilesharing.rf.gd/file/?name=${data.filename}`;
+                        a.href = `https://awesomefilesharing.rf.gd/file/?name=${data.filename}`;
+                        a.innerHTML = `https://awesomefilesharing.rf.gd/file/?name=${data.filename}`;
                         a.target = '_blank';
                         p.appendChild(a);
                         uploadResults.appendChild(p);
