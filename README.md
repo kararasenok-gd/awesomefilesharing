@@ -13,7 +13,7 @@
 2. Установите [Composer](https://getcomposer.org/download/)
 3. В папке `src/api` выполните 
 ```bash
-composer install phpmailer/phpmailer
+composer require phpmailer/phpmailer
 ```
 4. Переименуйте файл `src/api/config.ex.php` в `src/api/config.php`
 
