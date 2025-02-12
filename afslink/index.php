@@ -15,7 +15,7 @@ if (isset($_GET['err'])) {
     exit;
 }
 
-$config = require '../../htdocs/api/config.php';
+$config = require 'config.php';
 
 $mysqli = new mysqli(
     $config['database']['host'],
