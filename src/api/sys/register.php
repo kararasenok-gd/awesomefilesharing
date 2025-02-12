@@ -24,7 +24,7 @@ if (strlen($username) < $config['accounts']['minUsernameLength'] || strlen($user
 }
 
 if (
-    strlen($_POST['newPasswd']) < $config['accounts']['minPasswordLength'] ||
+    strlen($password) < $config['accounts']['minPasswordLength'] ||
     ($config['accounts']['passwordRequired']['uppercase'] && !preg_match('/[A-Z]/', $password)) ||
     ($config['accounts']['passwordRequired']['numbers'] && !preg_match('/[0-9]/', $password)) ||
     ($config['accounts']['passwordRequired']['symbols'] && !preg_match('/[!@#$%^&*(),.?":{}|<>]/', $password))
