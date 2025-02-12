@@ -203,6 +203,8 @@ header('Content-Type: text/html; charset=UTF-8');
                         entry.appendChild(preview);
                     }
 
+                    entry.appendChild(document.createElement('br'));
+
                     const downloadLink = document.createElement('a');
                     downloadLink.href = fileURL;
                     downloadLink.download = filename;

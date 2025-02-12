@@ -141,16 +141,59 @@ if (!isset($_GET['raw'])) {
     </html>";
 
     exit();
-}
+} else {
+    $filePath = "../uploads/" . $name;
 
-header("Content-Type: " . mime_content_type($filePath));
-header("Accept-Ranges: bytes");
-readfile($filePath);
-exit();
+    if (!file_exists($filePath)) {
+        http_response_code(404);
+        echo json_encode(["error" => "File not found."]);
+        exit;
+    }
+
+    $fileSize = filesize($filePath);
+    $mimeType = mime_content_type($filePath);
+
+    header("Content-Type: $mimeType");
+    header("Accept-Ranges: bytes");
+    header("Content-Length: $fileSize");
+
+    if (isset($_SERVER['HTTP_RANGE'])) {
+        $range = $_SERVER['HTTP_RANGE'];
+        if (strpos($range, 'bytes=') === 0) {
+            $range = substr($range, 6);
+            list($start, $end) = explode('-', $range);
+
+            $start = intval($start);
+            $end = $end === '' ? $fileSize - 1 : intval($end);
+
+            if ($start >= $fileSize || $end >= $fileSize || $start > $end) {
+                http_response_code(416);
+                header("Content-Range: bytes */$fileSize");
+                exit;
+            }
+
+            $length = $end - $start + 1;
+            http_response_code(206);
+            header("Content-Range: bytes $start-$end/$fileSize");
+            header("Content-Length: $length");
+
+            $file = fopen($filePath, 'rb');
+            fseek($file, $start);
+            echo fread($file, $length);
+            fclose($file);
+        } else {
+            http_response_code(416);
+            header("Content-Range: bytes */$fileSize");
+            exit;
+        }
+    } else {
+        readfile($filePath);
+    }
+    exit();
+}
 
 function formatBytes($bytes) {
     $units = ['Б', 'КБ', 'МБ', 'ГБ', 'ТБ'];
     $factor = floor((strlen($bytes) - 1) / 3);
     return sprintf("%.2f", $bytes / pow(1024, $factor)) . " " . $units[$factor];
 }
-
