@@ -136,6 +136,7 @@ if (!isset($_GET['raw'])) {
                 <a href='../file/?name={$name}&raw=1' download='{$fileName}' class='download-btn'>Скачать файл</a>
             </div>
         </div>
+        <script src='../scripts/blur.js'></script>
     </body>
     </html>";
 
