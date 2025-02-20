@@ -382,3 +382,12 @@ input[type="file"]:disabled {
     border-radius: 5px;
     padding: 5px;
 }
+
+.noauth {
+    color: var(--nsfw);
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

@@ -68,8 +68,10 @@ if (!isset($_GET['raw'])) {
     $owner = $userRow['username'];
 
     $fileClasses = "file-preview";
+    $nsfwTag = "Отсутствует";
     if ($isNSFW) {
-        $fileClasses .= " nsfw";
+        // $fileClasses .= " nsfw";
+        $nsfwTag = "Присутствует";
     }
 
     if (strpos($fileType, 'image') !== false) {
@@ -95,7 +97,7 @@ if (!isset($_GET['raw'])) {
     <head>
         <meta charset='UTF-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-        <title>Просмотр файла: {$fileName}</title>
+        <title>AFSView - {$fileName}</title>
         <style>
             body { background-color: #282828; color: #846f65; font-family: Arial, sans-serif; text-align: center; padding: 50px; }
             .container { max-width: 800px; margin: 0 auto; }
@@ -125,6 +127,7 @@ if (!isset($_GET['raw'])) {
                 <div class='file-name'>{$fileName}</div>
                 <div class='file-info'>
                     Размер: " . formatBytes($fileSize) . "<br>
+                    NSFW Тег: {$nsfwTag}<br>
                     Тип файла: {$fileType}<br>
                     Владелец: {$owner}<br>
                 </div>

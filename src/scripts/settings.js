@@ -58,6 +58,17 @@ function togglePreview() {
 }
 
 function init() {
+    const authStatus = isAuthorized()
+
+    if (!authStatus) {
+        fetch(`./templates/noauth.html`)
+        .then(response => response.text())
+        .then(template => {
+            document.getElementById('content').innerHTML = template;
+        });
+        return
+    }
+
     const showPreviews = localStorage.getItem('showPreviews');
     if (showPreviews == '1') {
         document.getElementById('showPreviews').checked = true;

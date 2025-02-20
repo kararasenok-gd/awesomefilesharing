@@ -4,6 +4,17 @@ function getFiles() {
     const totalFiles = document.getElementById('totalFiles');
     const nsfwFiles = document.getElementById('nsfwFiles');
 
+    const authStatus = isAuthorized()
+
+    if (!authStatus) {
+        fetch(`./templates/noauth.html`)
+        .then(response => response.text())
+        .then(template => {
+            document.getElementById('content').innerHTML = template;
+        });
+        return
+    }
+
     fetch('./api/sys/getFiles.php').then(response => response.json()).then(data => {
         if (data.success) {
             files.innerHTML = '';

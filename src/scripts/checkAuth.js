@@ -1,3 +1,18 @@
+var userAuthorized = false;
+
+function tmp___(response) {
+    if (response.success) {
+        accountName.innerHTML = response.user.username;
+        userAuthorized = true;
+
+        if (response.user.avatar) {
+            accountAvatar.src = response.user.avatar;
+        }
+    } else {
+        accountName.innerHTML = "Гость";
+    }
+}
+
 function accCheck() {
     console.log('Running accCheck...');
 
@@ -6,20 +21,10 @@ function accCheck() {
 
     fetch("./api/sys/auth.php")
         .then(response => response.json())
-        .then(response => {
-            if (response.success) {
-                accountName.innerHTML = response.user.username;
-
-                if (response.user.avatar) {
-                    accountAvatar.src = response.user.avatar;
-                }
-            } else {
-                window.location.href = "./login";
-            }
-        })
+        .then(response => tmp___(response))
         .catch(error => {
             console.error(error);
-            window.location.href = "./login";
+            accountName.innerHTML = "Гость";
         });
 }
 
@@ -40,6 +45,11 @@ function getAuthInfo() {
 }
 
 function logout() {
+    if (!isAuthorized()) {
+        window.location.href = './login';
+        return
+    }
+
     if (!confirm('Вы уверены, что хотите выйти?')) { return }
     fetch("./api/sys/logout.php")
         .then(response => {
@@ -52,12 +62,16 @@ function logout() {
             if (!data.success) {
                 throw new Error(data.error || 'Unknown error');
             }
-            window.location.href = "./login";
+            window.location.reload()
         })
         .catch(error => {
             console.error(error);
             alert(error.message);
         });
+}
+
+function isAuthorized() {
+    return userAuthorized;
 }
 
 accCheck();
