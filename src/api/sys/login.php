@@ -7,20 +7,12 @@ header('Content-Type: application/json');
 
 require "../usefulFuncs.php";
 
-if (!isset($_POST['username']) || !isset($_POST['password']) || !isset($_POST['hcaptcha'])) {
-    errorResponse(400, "Bad Request: Missing username, password, or hcaptcha");
+if (!isset($_POST['username']) || !isset($_POST['password'])) {
+    errorResponse(400, "Bad Request: Missing username, password");
 }
 
 $username = $_POST['username'];
 $password = md5($_POST['password']);
-$hcaptchaResponse = $_POST['hcaptcha'];
-
-$hcaptchaSecret = $config['hcaptcha']['secret'];
-$hcaptchaVerify = file_get_contents("https://hcaptcha.com/siteverify?secret=$hcaptchaSecret&response=$hcaptchaResponse");
-$hcaptchaData = json_decode($hcaptchaVerify, true);
-if (!$hcaptchaData['success']) {
-    errorResponse(403, "Failed to check captcha. Try to complete it again");
-}
 
 $mysqli = new mysqli(
     $config['database']['host'],

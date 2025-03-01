@@ -173,17 +173,6 @@ function uploadFiles() {
 
 
 function updateFilesProgress() {
-    const authStatus = isAuthorized()
-
-    if (!authStatus) {
-        fetch(`./templates/noauth.html`)
-        .then(response => response.text())
-        .then(template => {
-            document.getElementById('content').innerHTML = template;
-        });
-        return
-    }
-
     fetch('./api/sys/getSize.php')
     .then(response => response.json())
     .then(data => {
@@ -210,4 +199,19 @@ document.getElementById('uploadButton').addEventListener('click', () => {
     uploadFiles();
 });
 
-updateFilesProgress();
+function init() {
+    const authStatus = isAuthorized()
+
+    if (!authStatus) {
+        fetch(`./templates/noauth.html`)
+        .then(response => response.text())
+        .then(template => {
+            document.getElementById('content').innerHTML = template;
+        });
+        return
+    }
+
+    updateFilesProgress();
+}
+
+init();

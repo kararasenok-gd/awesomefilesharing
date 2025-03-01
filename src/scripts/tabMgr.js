@@ -50,5 +50,6 @@ function loadTab(tab = null) {
 }
 
 window.addEventListener('load', () => {
-    loadTab(window.location.search.split('=')[1]);
+    let tab = new URLSearchParams(window.location.search).get('tab') || 'index';
+    loadTab(tab);
 });

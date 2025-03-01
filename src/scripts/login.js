@@ -9,19 +9,18 @@ var regPassword = document.getElementById("regPassword");
 var regEmail = document.getElementById("regEmail");
 var loginUsername = document.getElementById("loginUsername");
 var loginPassword = document.getElementById("loginPassword");
+var captchaElement = document.getElementById("hcaptcha");
 
 function onCaptchaSuccess(token) {
     captchaToken = token;
 
     regBTN.disabled = false;
-    loginBTN.disabled = false;
 
     console.log('hCaptcha token:', captchaToken);
 }
 
 function resetCaptcha() {
     regBTN.disabled = true;
-    loginBTN.disabled = true;
     captchaToken = "";
 
     hcaptcha.reset();
@@ -57,11 +56,10 @@ regBTN.addEventListener("click", function() {
 
 
 loginBTN.addEventListener("click", function() {
-    if (loginUsername.value && loginPassword.value && captchaToken) {
+    if (loginUsername.value && loginPassword.value) {
         const fd = new FormData();
         fd.append("username", loginUsername.value);
         fd.append("password", loginPassword.value);
-        fd.append("hcaptcha", captchaToken);
 
         fetch("../api/sys/login.php", {
             method: "POST",
@@ -100,4 +98,19 @@ function handleMessageInParams() {
     }
 }
 
-handleMessageInParams();
+async function init() {
+    handleMessageInParams();
+
+    let settings = await fetch("../api/config.json");
+    settings = await settings.json();
+
+    captchaElement.setAttribute("data-sitekey", settings.captcha.sitekey);
+
+    var hcaptchaApi = document.createElement("script");
+    hcaptchaApi.src = "https://hcaptcha.com/1/api.js";
+    hcaptchaApi.async = true;
+    hcaptchaApi.defer = true;
+    document.head.appendChild(hcaptchaApi);
+}
+
+init();

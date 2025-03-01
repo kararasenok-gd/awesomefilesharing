@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Awesome File Sharing - Вход/Регистрация</title>
     <link rel="stylesheet" href="../styles/login.css">
-    <script src="https://hcaptcha.com/1/api.js" async defer></script>
 </head>
 
 <body>
@@ -19,7 +18,7 @@
                 <input type="text" id="loginUsername" required>
                 <label for="loginPassword">Пароль</label>
                 <input type="password" id="loginPassword" required>
-                <button id="loginBtn" disabled>Войти</button>
+                <button id="loginBtn">Войти</button>
             </div>
 
             <div class="divider"></div>
@@ -37,7 +36,7 @@
         </div>
 
         <div class="captcha-container">
-            <div class="h-captcha" data-sitekey="05a2ac4e-50ac-489c-afe4-cfec231200c6" data-callback="onCaptchaSuccess">
+            <div class="h-captcha" data-sitekey="" data-callback="onCaptchaSuccess" id="hcaptcha">
             </div>
         </div>
     </div>

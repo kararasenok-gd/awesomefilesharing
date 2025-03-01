@@ -1,3 +1,4 @@
 src/api/config.php
 src/api/vendor
 afslink/config.php
+src/api/config.json

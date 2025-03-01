@@ -13,6 +13,9 @@ if (!isset($_SESSION['user'])) {
 
 $userId = $_SESSION['user']['id'];
 
+$sort = isset($_GET['sort']) ? $_GET['sort'] : 'id';
+$sortOrder = isset($_GET['order']) ? $_GET['order'] : 'DESC';
+
 $mysqli = new mysqli(
     $config['database']['host'],
     $config['database']['user'],
@@ -23,7 +26,7 @@ if ($mysqli->connect_error) {
     errorResponse(500, "Database connection failed");
 }
 
-$stmt = $mysqli->prepare("SELECT * FROM files WHERE user_id = ? ORDER BY upload_date DESC");
+$stmt = $mysqli->prepare("SELECT * FROM files WHERE user_id = ? ORDER BY $sort $sortOrder");
 $stmt->bind_param("i", $userId);
 $stmt->execute();
 $result = $stmt->get_result();

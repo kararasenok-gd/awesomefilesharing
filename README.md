@@ -16,6 +16,7 @@
    composer require phpmailer/phpmailer
    ```
 4. Переименуйте файл `src/api/config.ex.php` в `src/api/config.php`.
+5. Тоже самое с файлом `src/api/config.ex.json`, но только с расширением `.json`.
 
 ### Этап 2. Установка базы данных
 1. Откройте phpMyAdmin.
@@ -26,8 +27,7 @@
 ### Этап 3. Настройка hCaptcha
 1. Авторизуйтесь на [hCaptcha](https://hcaptcha.com/).
 2. Перейдите во вкладку [Sites](https://dashboard.hcaptcha.com/sites) и добавьте новый сайт.
-3. Скопируйте сгенерированный `sitekey` и вставьте его в `src/api/config.php`.
-4. Замените ключ `05a2ac4e-50ac-489c-afe4-cfec231200c6` в файлах `src/login/index.html` и `src/templates/upload.html` на свой `sitekey`.
+3. Скопируйте сгенерированный `sitekey` и вставьте его в `src/api/config.php` и `src/api/config.json`.
 5. Получите `secret` на странице [настроек аккаунта](https://dashboard.hcaptcha.com/settings/secrets) и вставьте его в `src/api/config.php`.
 
 ### Этап 4. Настройка почты (необязательно)

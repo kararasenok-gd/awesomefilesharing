@@ -66,7 +66,7 @@ if ($mysqli->connect_error) {
     errorResponse(500, "Database connection failed");
 }
 
-$stmt = $mysqli->prepare("INSERT INTO files (filename, is_nsfw, user_id, size, file_type, upload_date) VALUES (?, ?, ?, ?, ?, ?)");
+$stmt = $mysqli->prepare("INSERT INTO files (filename, is_nsfw, user_id, size, file_type, upload_date, views, views_raw) VALUES (?, ?, ?, ?, ?, ?, 0, 0)");
 $userId = $_SESSION['user']['id'];
 $uploadUnixTime = time();
 $stmt->bind_param("siiisi", $filename, $isNSFW, $userId, $file['size'], $fileMimeType, $uploadUnixTime);

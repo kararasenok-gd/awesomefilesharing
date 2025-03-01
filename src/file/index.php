@@ -10,6 +10,19 @@ if (!isset($_GET['name'])) {
     exit;
 }
 
+$mysqli = new mysqli(
+    $config['database']['host'],
+    $config['database']['user'],
+    $config['database']['password'],
+    $config['database']['database']
+);
+
+if ($mysqli->connect_error) {
+    http_response_code(500);
+    echo json_encode(["error" => "Database connection failed."]);
+    exit;
+}
+
 $name = basename($_GET['name']);
 $filePath = "../uploads/" . $name;
 
@@ -25,19 +38,6 @@ if (!isset($_GET['raw'])) {
     $fileName = basename($filePath);
     $filePreview = "";
 
-    $mysqli = new mysqli(
-        $config['database']['host'],
-        $config['database']['user'],
-        $config['database']['password'],
-        $config['database']['database']
-    );
-
-    if ($mysqli->connect_error) {
-        http_response_code(500);
-        echo json_encode(["error" => "Database connection failed."]);
-        exit;
-    }
-
     $stmt = $mysqli->prepare("SELECT * FROM files WHERE filename = ?");
     $stmt->bind_param("s", $name);
     $stmt->execute();
@@ -52,6 +52,8 @@ if (!isset($_GET['raw'])) {
     $row = $result->fetch_assoc();
     $isNSFW = $row['is_nsfw'] === 1;
     $user_id = $row['user_id'];
+    $views = $row['views'];
+    $rawViews = $row['views_raw'];
 
     $stmt = $mysqli->prepare("SELECT username FROM users WHERE id = ?");
     $stmt->bind_param("i", $user_id);
@@ -90,6 +92,11 @@ if (!isset($_GET['raw'])) {
         $fileContent = htmlspecialchars(file_get_contents($filePath));
         $filePreview = "<pre class='{$fileClasses}' style='background-color: #312d2b; color: #b8b8b8; padding: 10px; border-radius: 8px; text-align: left; white-space: pre-wrap; overflow-x: auto; max-height: 300px;'>{$fileContent}</pre>";
     }
+
+    $stmt = $mysqli->prepare("UPDATE files SET views = views + 1 WHERE filename = ?");
+    $stmt->bind_param("s", $name);
+    $stmt->execute();
+
 
     header("Content-Type: text/html");
     echo "<!DOCTYPE html>
@@ -130,6 +137,8 @@ if (!isset($_GET['raw'])) {
                     NSFW Тег: {$nsfwTag}<br>
                     Тип файла: {$fileType}<br>
                     Владелец: {$owner}<br>
+                    Просмотры: {$views}<br>
+                    <span title='Raw-просмотры — количество прямых обращений к файлу: скачиваний, встраиваний на сторонние ресурсы или отображений через прямую ссылку.' style='cursor: help;'>RAW-Просмотры</span>: {$rawViews}<br>
                 </div>
                 <div class='file-preview'>
                     {$filePreview}
@@ -192,6 +201,9 @@ if (!isset($_GET['raw'])) {
     } else {
         readfile($filePath);
     }
+    $stmt = $mysqli->prepare("UPDATE files SET views_raw = views_raw + 1 WHERE filename = ?");
+    $stmt->bind_param("s", $name);
+    $stmt->execute();
     exit();
 }
 

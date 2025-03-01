@@ -391,3 +391,54 @@ input[type="file"]:disabled {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+select {
+    background-color: var(--elmnt);
+    color: var(--txt);
+    border: 1px solid var(--txt);
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+select:hover {
+    filter: brightness(0.9);
+    transition: all 0.3s;
+}
+
+select:active {
+    border-color: var(--link);
+    transition: all 0.3s;
+}
+
+select:focus {
+    border-color: var(--link);
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+}
+
+select:disabled {
+    filter: brightness(0.5);
+    cursor: not-allowed;
+}
+
+noscript {
+    color: var(--nsfw);
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    z-index: 9999;
+
+    text-align: center;
+
+    background-color: rgba(0, 0, 0, 0.75);
+    border-radius: 5px;
+    padding: 5px;
+}

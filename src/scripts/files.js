@@ -1,21 +1,10 @@
-function getFiles() {
+function getFiles(sort = "id", order = "DESC") {
     const files = document.getElementById('files');
     const totalFilesSize = document.getElementById('totalFilesSize');
     const totalFiles = document.getElementById('totalFiles');
     const nsfwFiles = document.getElementById('nsfwFiles');
 
-    const authStatus = isAuthorized()
-
-    if (!authStatus) {
-        fetch(`./templates/noauth.html`)
-        .then(response => response.text())
-        .then(template => {
-            document.getElementById('content').innerHTML = template;
-        });
-        return
-    }
-
-    fetch('./api/sys/getFiles.php').then(response => response.json()).then(data => {
+    fetch(`./api/sys/getFiles.php?sort=${sort}&order=${order}`).then(response => response.json()).then(data => {
         if (data.success) {
             files.innerHTML = '';
 
@@ -30,7 +19,11 @@ function getFiles() {
                 fileElement.className = 'file';
 
                 if (file.is_nsfw == 1) {
-                    fileElement.classList.add('nsfw');
+                    if (localStorage.getItem("showNSFW") == '1' || localStorage.getItem("showNSFW") == null) {
+                        fileElement.classList.add('nsfw');
+                    } else {
+                        continue;
+                    }
                 }
 
                 const backgroundImgSetting = localStorage.getItem('showPreviews');
@@ -55,6 +48,10 @@ function getFiles() {
                 const fileDate = document.createElement('p');
                 fileDate.textContent = decodeUnixTime(file.upload_date);
                 fileElement.appendChild(fileDate);
+
+                const fileViews = document.createElement('p');
+                fileViews.textContent = `Просмотры: ${file.views} | Raw: ${file.views_raw} | Всего: ${file.views_raw + file.views}`;
+                fileElement.appendChild(fileViews);
 
                 const fileActions = document.createElement('div');
                 fileActions.className = 'file-actions';
@@ -139,5 +136,27 @@ function shorten(id) {
     });
 }
 
+function appendSortParams() {
+    const sort = document.getElementById('sort').value;
+    const order = document.getElementById('order').value;
+    
+    getFiles(sort, order);
+}
 
-getFiles();
+function init() {
+    const authStatus = isAuthorized()
+
+    if (!authStatus) {
+        fetch(`./templates/noauth.html`)
+        .then(response => response.text())
+        .then(template => {
+            document.getElementById('content').innerHTML = template;
+        });
+        return
+    }
+
+    getFiles();
+}
+
+
+init();

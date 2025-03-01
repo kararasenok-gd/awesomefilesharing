@@ -57,6 +57,11 @@ function togglePreview() {
     localStorage.setItem('showPreviews', showPreviews? 1 : 0);
 }
 
+function toggleNSFW() {
+    const showNSFW = document.getElementById('showNSFW').checked;
+    localStorage.setItem('showNSFW', showNSFW? 1 : 0);
+}
+
 function init() {
     const authStatus = isAuthorized()
 
@@ -73,10 +78,16 @@ function init() {
     if (showPreviews == '1') {
         document.getElementById('showPreviews').checked = true;
     }
+
+    const showNSFW = localStorage.getItem('showNSFW');
+    if (showNSFW == '1' || showNSFW == null) {
+        document.getElementById('showNSFW').checked = true;
+    }
 }
 
 document.getElementById('changePassword').addEventListener('click', changePassword);
 document.getElementById('deleteAccount').addEventListener('click', deleteAccount);
 document.getElementById('showPreviews').addEventListener('change', togglePreview);
+document.getElementById('showNSFW').addEventListener('change', toggleNSFW);
 
 init();
