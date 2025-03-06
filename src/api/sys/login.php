@@ -7,12 +7,24 @@ header('Content-Type: application/json');
 
 require "../usefulFuncs.php";
 
-if (!isset($_POST['username']) || !isset($_POST['password'])) {
-    errorResponse(400, "Bad Request: Missing username, password");
-}
+if (!isset($_POST['token'])) {
+    if (!isset($_POST['username']) || !isset($_POST['password'])) {
+        errorResponse(400, "Bad Request: Missing username or password");
+    }
 
-$username = $_POST['username'];
-$password = md5($_POST['password']);
+    $username = $_POST['username'];
+    $password = md5($_POST['password']);
+} else {
+    if (isset($_POST['username']) || isset($_POST['password'])) {
+        errorResponse(400, "Bad Request: Cannot use token with username or password");
+    }
+
+    $token = $_POST['token'];
+    $decodedToken = base64_decode($token);
+    $tokenParts = explode(':', $decodedToken);
+    $username = $tokenParts[0];
+    $password = $tokenParts[1];
+}
 
 $mysqli = new mysqli(
     $config['database']['host'],

@@ -26,6 +26,10 @@ function resetCaptcha() {
     hcaptcha.reset();
 }
 
+function md5(str) {
+    return CryptoJS.MD5(str).toString();
+}
+
 
 regBTN.addEventListener("click", function() {
     if (regUsername.value && regPassword.value && regEmail.value && captchaToken) {
@@ -67,7 +71,13 @@ loginBTN.addEventListener("click", function() {
         }).then(res => res.json()).then(data => {
             resetCaptcha();
             if (data.success) {
-                alert("Вы успешно вошли!");
+                if (document.getElementById("rememberMe").checked) {
+                    const encodedCredentials = btoa(`${loginUsername.value}:${md5(loginPassword.value)}`); // Конвертируем в base64
+                    const expirationDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+                    document.cookie = `LongLifeToken=${encodedCredentials}; expires=${expirationDate.toUTCString()}; path=/;`;
+                }
+
+                alert("Вы успешно вошли!" + (document.getElementById("rememberMe").checked ? "\nДанные сохранены в куки" : ""));
                 window.location.href = "../";
             } else {
                 alert(data.error);

@@ -26,6 +26,16 @@
     margin: 5px 0;
 }
 
+.can-highlight {
+    filter: brightness(0.5);
+    transition: all 0.3s;
+}
+
+.highlight {
+    filter: none !important;
+    transition: all 0.3s;
+}
+
 @media (max-width: 1100px) {
     .files {
         grid-template-columns: repeat(2, 1fr) !important;

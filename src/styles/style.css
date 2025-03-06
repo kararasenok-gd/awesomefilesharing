@@ -9,6 +9,11 @@
     --link: #00b7ff;
     --nsfw: #eb6262;
     --placehold: #afafaf;
+    --succ: #76ff76;
+
+    --checkBord: #846f65;
+    --checkChckd: #00a808;
+    --checkNo: #be2600;
 }
 
 body {
@@ -343,28 +348,17 @@ input[type="file"]:disabled {
 }
 
 .spinner {
-    background-image: url('../assets/load.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-
-    display: block;
-    width: 100px;
-    height: 100px;
-
-    position: absolute;
-    top: 50%;
-    left: 50%;
-
-    z-index: 1;
-
-    animation: spin 1s linear infinite;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(212, 190, 152, 0.3);
+    border-radius: 50%;
+    border-top-color: #d4be98;
+    animation: spin 1s ease-in-out infinite;
 }
 
 @keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+    to { transform: rotate(360deg); }
 }
 
 .showleftbar {
@@ -441,4 +435,45 @@ noscript {
     background-color: rgba(0, 0, 0, 0.75);
     border-radius: 5px;
     padding: 5px;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--checkBord);
+    border-radius: 4px;
+    background-color: var(--checkNo);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+input[type="checkbox"]:hover {
+    filter: brightness(1.1);
+}
+
+input[type="checkbox"]:checked {
+    background-color: var(--checkChckd);
+}
+
+input[type="text"] {
+    background-color: var(--elmnt);
+    color: var(--txt);
+    border: 1px solid var(--txt);
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+input[type="text"]:hover {
+    filter: brightness(0.9);
+    transition: all 0.3s;
+}
+
+input[type="text"]:active, input[type="text"]:focus {
+    border-color: var(--link);
+    transition: all 0.3s;
 }

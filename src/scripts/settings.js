@@ -62,6 +62,11 @@ function toggleNSFW() {
     localStorage.setItem('showNSFW', showNSFW? 1 : 0);
 }
 
+function togglehideSearch() {
+    const hideSearch = document.getElementById('hideSearch').checked;
+    localStorage.setItem('hideSearch', hideSearch? 1 : 0);
+}
+
 function init() {
     const authStatus = isAuthorized()
 
@@ -83,11 +88,17 @@ function init() {
     if (showNSFW == '1' || showNSFW == null) {
         document.getElementById('showNSFW').checked = true;
     }
+
+    const hideSearch = localStorage.getItem('hideSearch');
+    if (hideSearch == '1') {
+        document.getElementById('hideSearch').checked = true;
+    }
 }
 
 document.getElementById('changePassword').addEventListener('click', changePassword);
 document.getElementById('deleteAccount').addEventListener('click', deleteAccount);
 document.getElementById('showPreviews').addEventListener('change', togglePreview);
 document.getElementById('showNSFW').addEventListener('change', toggleNSFW);
+document.getElementById('hideSearch').addEventListener('change', togglehideSearch);
 
 init();

@@ -10,6 +10,10 @@ header('Content-Type: application/json');
 
 require "../usefulFuncs.php";
 
+if (!$config['accounts']['registration']) {
+    errorResponse(403, "Registration is disabled in the server configuration.\n\nIf you a visitor, please contact the server administrator.\nIf you are a server administrator, please enable registration in the server configuration ('\"registration\" => true' in \"accounts\" section).");
+}
+
 if (!isset($_POST['username'], $_POST['password'], $_POST['email'], $_POST['hcaptcha'])) {
     errorResponse(400, "Bad Request: Missing username, password, email, or hcaptcha");
 }

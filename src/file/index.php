@@ -93,9 +93,11 @@ if (!isset($_GET['raw'])) {
         $filePreview = "<pre class='{$fileClasses}' style='background-color: #312d2b; color: #b8b8b8; padding: 10px; border-radius: 8px; text-align: left; white-space: pre-wrap; overflow-x: auto; max-height: 300px;'>{$fileContent}</pre>";
     }
 
-    $stmt = $mysqli->prepare("UPDATE files SET views = views + 1 WHERE filename = ?");
-    $stmt->bind_param("s", $name);
-    $stmt->execute();
+    if (!isset($_GET['ignore'])) {
+        $stmt = $mysqli->prepare("UPDATE files SET views = views + 1 WHERE filename = ?");
+        $stmt->bind_param("s", $name);
+        $stmt->execute();
+    }
 
 
     header("Content-Type: text/html");
@@ -201,13 +203,16 @@ if (!isset($_GET['raw'])) {
     } else {
         readfile($filePath);
     }
-    $stmt = $mysqli->prepare("UPDATE files SET views_raw = views_raw + 1 WHERE filename = ?");
-    $stmt->bind_param("s", $name);
-    $stmt->execute();
+    if (!isset($_GET['ignore'])) {
+        $stmt = $mysqli->prepare("UPDATE files SET views_raw = views_raw + 1 WHERE filename = ?");
+        $stmt->bind_param("s", $name);
+        $stmt->execute();
+    }
     exit();
 }
 
-function formatBytes($bytes) {
+function formatBytes($bytes)
+{
     $units = ['Б', 'КБ', 'МБ', 'ГБ', 'ТБ'];
     $factor = floor((strlen($bytes) - 1) / 3);
     return sprintf("%.2f", $bytes / pow(1024, $factor)) . " " . $units[$factor];

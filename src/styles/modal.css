@@ -1,0 +1,151 @@
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.modal-box {
+    background-color: var(--elmnt);
+    border-radius: 5px;
+    padding: 20px 5px 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 75%;
+    min-height: 30%;
+    max-height: 80vh;
+    margin: 0;
+    transition: all 0.2s ease-in-out;
+}
+
+.modal-header {
+    position: relative;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.modal-title {
+    text-align: center;
+    width: 100%;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0 0 15px 0;
+    color: var(--txt);
+    padding-right: 30px; /* Место для кнопки закрытия */
+}
+
+.modal-close {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: var(--txt);
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+    opacity: 1;
+    outline: none;
+}
+
+.modal-divider {
+    width: 90%;
+    height: 1px;
+    background: var(--txt);
+    opacity: 0.2;
+    margin: 15px auto;
+    transition: opacity 0.2s;
+}
+
+.modal-box.show .modal-divider {
+    opacity: 0.4;
+}
+
+.modal-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0 20px;
+
+    overflow-y: auto;
+    overflow-x: auto;
+    max-height: 80vh;
+}
+
+.modal-content img,
+.modal-content video
+{
+    max-width: 75%;
+    max-height: 75%;
+}
+
+@keyframes showModal {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes hideModal {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.modal.show {
+    opacity: 1;
+    pointer-events: auto;
+    animation: showModal 0.3s ease-in-out;
+}
+
+.modal.hide {
+    opacity: 0;
+    pointer-events: none;
+    animation: hideModal 0.3s ease-in-out;
+}
+
+@keyframes showModalBox {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes hideModalBox {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+}
+
+.modal-box.show {
+    animation: showModalBox 0.3s ease-in-out;
+}
+
+.modal-box.hide {
+    animation: hideModalBox 0.3s ease-in-out;
+}

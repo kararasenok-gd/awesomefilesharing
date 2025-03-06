@@ -18,13 +18,15 @@ CREATE TABLE `codes` (
 CREATE TABLE `files` (
   `id` int(11) NOT NULL,
   `filename` text NOT NULL,
+  `displayname` text NOT NULL,
   `user_id` int(11) NOT NULL,
   `is_nsfw` int(11) NOT NULL,
   `size` int(11) NOT NULL,
   `file_type` text NOT NULL,
   `upload_date` int(11) NOT NULL,
   `views` int(11) NOT NULL,
-  `views_raw` int(11) NOT NULL
+  `views_raw` int(11) NOT NULL,
+  `tags` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 CREATE TABLE `short` (

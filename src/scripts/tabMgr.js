@@ -5,7 +5,7 @@ function loadTab(tab = null) {
     let style = document.getElementById('loaded-style');
     let script = document.getElementById('loaded-script');
 
-    content.innerHTML = '<span class="spinner"></span>';
+    content.innerHTML = '<span class="spinner" style="position: absolute; top: 50%; left: 50%; width: 100px !important; height: 100px !important; border-width: 5px;"></span>';
 
     let isMainPage = false;
 
