@@ -274,7 +274,10 @@ function appendSortParams() {
     getFiles(sort, order);
 }
 
+const tagsSearch = document.getElementById('searchByTagsCount');
+
 function fetchTags(tag) {
+    let count = 0;
     const elements = document.getElementsByClassName('file');
     for (let i = 0; i < elements.length; i++) {
         const element = elements[i];
@@ -284,6 +287,8 @@ function fetchTags(tag) {
                 element.classList.add('highlight');
 
                 if (localStorage.getItem('hideSearch') == '1') { element.style.display = 'block'; }
+
+                count++;
             } else {
                 if (localStorage.getItem('hideSearch') != '1') {
                     element.classList.remove('highlight');
@@ -293,6 +298,8 @@ function fetchTags(tag) {
             }
         }
     }
+
+    tagsSearch.textContent = count;
 }
 
 function init() {
@@ -319,6 +326,10 @@ function searchByTags() {
             const element = elements[i];
             element.classList.remove('highlight');
             element.classList.remove('can-highlight');
+
+            if (localStorage.getItem('hideSearch') == '1') { element.style.display = 'block'; }
+
+            tagsSearch.textContent = `Все`;
         }
         return;
     } else {
