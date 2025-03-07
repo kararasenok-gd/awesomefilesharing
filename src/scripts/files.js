@@ -65,6 +65,34 @@ function getFiles(sort = "id", order = "DESC") {
                 fileActions.className = 'file-actions';
 
                 const modalContentTemp = document.createElement('div');
+    
+                const modal_buttons = document.createElement('div');
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Удалить';
+                deleteButton.className = 'delete';
+                deleteButton.setAttribute('onclick', `deleteFile('${file.id}')`);
+                modal_buttons.appendChild(deleteButton);
+
+                const viewButton = document.createElement('button');
+                viewButton.textContent = 'Просмотр';
+                viewButton.className = 'view';
+                viewButton.setAttribute('onclick', `openFile('${file.filename}')`);
+                modal_buttons.appendChild(viewButton);
+
+                const shortenButton = document.createElement('button');
+                shortenButton.textContent = 'Сократить ссылку';
+                shortenButton.className = 'link';
+                shortenButton.setAttribute('onclick', `shorten('${file.id}')`);
+                modal_buttons.appendChild(shortenButton);
+
+                const editDitailsButton = document.createElement('button');
+                editDitailsButton.textContent = 'Редактировать';
+                editDitailsButton.className = 'edit';
+                editDitailsButton.setAttribute('onclick', `editFile('${file.id}')`);
+                modal_buttons.appendChild(editDitailsButton);
+
+                modalContentTemp.appendChild(modal_buttons);
 
                 if (file.file_type.includes('image')) {
                     const img = document.createElement('img');
@@ -85,41 +113,6 @@ function getFiles(sort = "id", order = "DESC") {
                     pre.textContent = "Тип файла не поддерживается";
                     modalContentTemp.appendChild(pre);
                 }
-    
-                const modal_buttons = document.createElement('div');
-
-                const deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Удалить';
-                deleteButton.className = 'delete';
-                deleteButton.setAttribute('onclick', `deleteFile('${file.id}')`);
-                modal_buttons.appendChild(deleteButton);
-
-                modal_buttons.appendChild(document.createElement('br'));
-
-                const viewButton = document.createElement('button');
-                viewButton.textContent = 'Просмотр';
-                viewButton.className = 'view';
-                viewButton.setAttribute('onclick', `openFile('${file.filename}')`);
-                modal_buttons.appendChild(viewButton);
-
-                modal_buttons.appendChild(document.createElement('br'));
-
-                const shortenButton = document.createElement('button');
-                shortenButton.textContent = 'Сократить ссылку';
-                shortenButton.className = 'link';
-                shortenButton.setAttribute('onclick', `shorten('${file.id}')`);
-                modal_buttons.appendChild(shortenButton);
-
-                modal_buttons.appendChild(document.createElement('br'));
-
-                const editDitailsButton = document.createElement('button');
-                editDitailsButton.textContent = 'Редактировать';
-                editDitailsButton.className = 'edit';
-                editDitailsButton.setAttribute('onclick', `editFile('${file.id}')`);
-                modal_buttons.appendChild(editDitailsButton);
-
-                modalContentTemp.appendChild(document.createElement('br'));
-                modalContentTemp.appendChild(modal_buttons);
 
                 const openModal = document.createElement('a');
                 openModal.href = 'javascript:void(0)';
