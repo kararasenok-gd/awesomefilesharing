@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Awesome File Sharing - Вход/Регистрация</title>
     <link rel="stylesheet" href="../styles/login.css">
+    <link rel="stylesheet" href="../styles/modal.css">
 </head>
 
 <body>
@@ -18,7 +19,8 @@
                 <input type="text" id="loginUsername" required>
                 <label for="loginPassword">Пароль</label>
                 <input type="password" id="loginPassword" required>
-                <button id="loginBtn">Войти</button><br>
+                <button id="loginBtn">Войти</button>
+                <button id="forget">Забыл пароль</button><br>
 
                 <span title="Данные от сессии будут сохранены на 30 дней в cookie файлы" align="center"><input type="checkbox" id="rememberMe"><br>Сохранить сессию на 30 дней</span>
             </div>
@@ -45,6 +47,7 @@
 
 
     <script src="../scripts/login.js"></script>
+    <script src="../scripts/modal.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 </body>
 

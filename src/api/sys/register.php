@@ -80,7 +80,7 @@ $userId = $stmt->insert_id;
 $stmt->close();
 
 if ($config['accounts']['emailVerification']) {
-    $verificationCode = bin2hex(random_bytes(64));
+    $verificationCode = generateRandomString(128);
     $stmt = $mysqli->prepare("INSERT INTO codes (user_id, code) VALUES (?, ?)");
     $stmt->bind_param("is", $userId, $verificationCode);
     $stmt->execute();

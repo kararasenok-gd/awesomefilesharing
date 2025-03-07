@@ -10,6 +10,7 @@ var regEmail = document.getElementById("regEmail");
 var loginUsername = document.getElementById("loginUsername");
 var loginPassword = document.getElementById("loginPassword");
 var captchaElement = document.getElementById("hcaptcha");
+var forgetBTN = document.getElementById("forget");
 
 function onCaptchaSuccess(token) {
     captchaToken = token;
@@ -107,6 +108,43 @@ function handleMessageInParams() {
         }, 15000);
     }
 }
+
+
+function restore() {
+    console.log(document.getElementById("restore-email").value);
+    const fd = new FormData();
+    fd.append("email", document.getElementById("restore-email").value);
+
+    fetch("../api/sys/forget.php", {
+        method: "POST",
+        body: fd
+    }).then(res => res.json()).then(data => {
+        if (data.success) {
+            alert("Письмо с подтверждением отправлено на почту!\nЕсли письма долго нет, то проверьте спам");
+            hideModal(document.getElementById("forget-modal"));
+        } else {
+            alert(data.error);
+        }
+    });
+}
+
+forgetBTN.addEventListener("click", function() {
+    const tempModalDiv = document.createElement("div");
+
+    const modal_input = document.createElement("input");
+    modal_input.type = "email";
+    modal_input.id = `restore-email`
+    modal_input.placeholder = "Почта, на которую зарегестрирован аккаунт";
+    tempModalDiv.appendChild(modal_input);
+
+    const modal_button = document.createElement("button");
+    modal_button.textContent = "Восстановить";
+    modal_button.setAttribute("onclick", "restore()")
+
+    tempModalDiv.appendChild(modal_button);
+
+    showModal("Восстановление доступа", tempModalDiv.innerHTML, { closeButton: true }, "forget-modal");
+});
 
 async function init() {
     handleMessageInParams();

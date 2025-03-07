@@ -46,22 +46,22 @@
 }
 
 .modal-close {
-    position: absolute;
-    top: 0;
-    right: 20px;
-    font-size: 1.5rem;
-    cursor: pointer;
-    background: none;
-    border: none;
-    color: var(--txt);
-    opacity: 0.7;
-    transition: opacity 0.2s;
+    position: absolute !important;
+    top: 0 !important;
+    right: 20px !important;
+    font-size: 1.5rem !important;
+    cursor: pointer !important;
+    background: none !important;
+    border: none !important;
+    color: var(--txt) !important;
+    opacity: 0.7 !important;
+    transition: opacity 0.2s !important;
 }
 
 .modal-close:hover,
 .modal-close:focus {
-    opacity: 1;
-    outline: none;
+    opacity: 1 !important;
+    outline: none !important;
 }
 
 .modal-divider {
