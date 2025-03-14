@@ -29,6 +29,13 @@ CREATE TABLE `files` (
   `tags` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+CREATE TABLE `logs` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `action` text NOT NULL,
+  `timestamp` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
 CREATE TABLE `restore` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -58,6 +65,9 @@ ALTER TABLE `codes`
 ALTER TABLE `files`
   ADD PRIMARY KEY (`id`);
 
+ALTER TABLE `logs`
+  ADD PRIMARY KEY (`id`);
+
 ALTER TABLE `restore`
   ADD PRIMARY KEY (`id`);
 
@@ -72,6 +82,9 @@ ALTER TABLE `codes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `files`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `logs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `restore`

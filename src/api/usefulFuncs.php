@@ -15,3 +15,11 @@ function generateRandomString($length) {
     }
     return $randomString;
 }
+
+function logAction($mysqli, $userId, $action) {
+    $timestamp = time();
+    $stmt = $mysqli->prepare("INSERT INTO logs (user_id, action, timestamp) VALUES (?, ?, ?)");
+    $stmt->bind_param("isi", $userId, $action, $timestamp);
+    $stmt->execute();
+    $stmt->close();
+}
