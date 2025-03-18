@@ -17,20 +17,13 @@ if (!isset($_FILES['file'])) {
 if (!isset($_POST['isNSFW'])) {
     errorResponse(400, "Bad Request: isNSFW not found");
 }
-if (!isset($_POST['hcaptcha'])) {
-    errorResponse(400, "Bad Request: hcaptcha not found");
+if (!isset($_POST['tags'])) {
+    errorResponse(400, "Bad Request: tags not found");
 }
 
 $file = $_FILES['file'];
 $isNSFW = $_POST['isNSFW'];
-$hcaptchaResponse = $_POST['hcaptcha'];
-
-// $hcaptchaSecret = $config['hcaptcha']['secret'];
-// $hcaptchaVerify = file_get_contents("https://hcaptcha.com/siteverify?secret=$hcaptchaSecret&response=$hcaptchaResponse");
-// $hcaptchaData = json_decode($hcaptchaVerify, true);
-// if (!$hcaptchaData['success']) {
-//     errorResponse(403, "Failed to check captcha. Try to complete it again");
-// }
+$tags = $_POST['tags'];
 
 $allowedPrefixes = ['image/', 'audio/', 'video/', 'text/'];
 $allowedMimeTypes = ['application/zip', 'application/x-zip-compressed'];
@@ -66,11 +59,12 @@ if ($mysqli->connect_error) {
     errorResponse(500, "Database connection failed");
 }
 
-$stmt = $mysqli->prepare("INSERT INTO files (filename, displayname, is_nsfw, user_id, size, file_type, upload_date, views, views_raw) VALUES (?, ?, ?, ?, ?, ?, ?, 0, 0)");
+$stmt = $mysqli->prepare("INSERT INTO files (filename, displayname, is_nsfw, user_id, size, file_type, upload_date, views, views_raw, tags) VALUES (?, ?, ?, ?, ?, ?, ?, 0, 0, ?)");
 $userId = $_SESSION['user']['id'];
 $uploadUnixTime = time();
-$stmt->bind_param("ssiiisi", $filename, $filename, $isNSFW, $userId, $file['size'], $fileMimeType, $uploadUnixTime);
+$stmt->bind_param("ssiiisis", $filename, $filename, $isNSFW, $userId, $file['size'], $fileMimeType, $uploadUnixTime, $tags);
 if (!$stmt->execute()) {
+    unlink($filePath);
     errorResponse(500, "Failed to save file info to database");
 }
 

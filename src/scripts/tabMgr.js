@@ -41,6 +41,13 @@ function loadTab(tab = null) {
                 script = document.createElement('script');
                 script.id = 'loaded-script';
                 script.src = `./scripts/${tab}.js`;
+                script.onload = () => {
+                    setTimeout(() => {
+                        if (typeof init === 'function') {
+                            init();
+                        }
+                    }, 1000);
+                }
                 document.body.appendChild(script);
             } else {
                 style.href = '';

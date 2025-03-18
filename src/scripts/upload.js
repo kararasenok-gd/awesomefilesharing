@@ -23,7 +23,7 @@ function updateTable(files) {
     initTh1.textContent = 'Название';
     initTr.appendChild(initTh1);
     const initTh2 = document.createElement('th');
-    initTh2.textContent = 'NSFW';
+    initTh2.textContent = 'Параметры';
     initTr.appendChild(initTh2);
     const initTh3 = document.createElement('th');
     initTh3.textContent = 'Размер';
@@ -41,6 +41,9 @@ function updateTable(files) {
         const file = files[i];
 
         const tr = document.createElement('tr');
+        tr.setAttribute('data-filename', file.name);
+        tr.setAttribute('data-tags', '');
+        tr.setAttribute('data-nsfw', false);
         
         const numCell = document.createElement('td');
         numCell.textContent = i + 1;
@@ -51,12 +54,66 @@ function updateTable(files) {
         nameCell.innerHTML = `<a href="${fileTempURL}" target="_blank">${file.name}</a>`;
         tr.appendChild(nameCell);
 
-        const nsfwCell = document.createElement('td');
-        const nsfwCheckbox = document.createElement('input');
-        nsfwCheckbox.type = 'checkbox';
-        nsfwCheckbox.id = `nsfw-${file.name}`;
-        nsfwCell.appendChild(nsfwCheckbox);
-        tr.appendChild(nsfwCell);
+        const paramsCell = document.createElement('td');
+        const paramsButton = document.createElement('button');
+        paramsButton.textContent = 'Параметры';
+
+        function paramsCellClickEvent() {
+            const temp__modalContent = document.createElement('div');
+
+            const filename = document.createElement('strong');
+            filename.textContent = `Имя файла: ${file.name}`;
+
+            const nsfwCheckbox = document.createElement('input');
+            nsfwCheckbox.id = `nsfw-${file.name}`;
+            nsfwCheckbox.type = 'checkbox';
+            
+            function onNsfwChange(event) {
+                const checked = event.target.checked;
+                tr.setAttribute('data-nsfw', checked);
+            }
+            nsfwCheckbox.addEventListener('change', onNsfwChange);
+
+            const nsfwLabel = document.createElement('label');
+            nsfwLabel.htmlFor = nsfwCheckbox.id;
+            nsfwLabel.textContent = 'NSFW: ';
+            nsfwLabel.appendChild(nsfwCheckbox);
+
+            const tagsInput = document.createElement('input');
+            tagsInput.type = 'text';
+            tagsInput.name = 'tags';
+            tagsInput.placeholder = 'Теги через ;';
+
+            function onTagsChange(event) {
+                tr.setAttribute('data-tags', event.target.value);
+            }
+            tagsInput.addEventListener('input', onTagsChange);
+
+            const tagsLabel = document.createElement('label');
+            tagsLabel.htmlFor = tagsInput.id;
+            tagsLabel.textContent = 'Теги: ';
+            tagsLabel.appendChild(tagsInput);
+
+            const updateDataButton = document.createElement('button');
+            updateDataButton.textContent = 'Обновить данные';
+            updateDataButton.addEventListener('click', () => {
+                tagsInput.setAttribute('value', tr.getAttribute('data-tags'));
+                nsfwCheckbox.checked = tr.getAttribute('data-nsfw') == 'true';
+            })
+
+            temp__modalContent.appendChild(filename);
+            temp__modalContent.appendChild(document.createElement('br'));
+            temp__modalContent.appendChild(nsfwLabel);
+            temp__modalContent.appendChild(document.createElement('br'));
+            temp__modalContent.appendChild(tagsLabel);
+            temp__modalContent.appendChild(document.createElement('br'));
+            temp__modalContent.appendChild(updateDataButton);
+
+            showModal('Параметры', temp__modalContent, {}, `params-${file.name}`);
+        }
+        paramsButton.addEventListener('click', paramsCellClickEvent);
+        paramsCell.appendChild(paramsButton);
+        tr.appendChild(paramsCell);
 
         const sizeCell = document.createElement('td');
         sizeCell.textContent = decodeBytes(file.size);
@@ -67,7 +124,7 @@ function updateTable(files) {
         tr.appendChild(typeCell);
 
         const uploadedCell = document.createElement('td');
-        uploadedCell.textContent = "❌";
+        uploadedCell.textContent = "❌ Не загружено";
         uploadedCell.id = `uploaded-${file.name}`;
         tr.appendChild(uploadedCell);
 
@@ -89,10 +146,13 @@ function uploadFiles() {
 
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
+        const filedata = document.querySelector(`tr[data-filename="${file.name}"]`);
+
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('isNSFW', document.getElementById(`nsfw-${file.name}`).checked ? 1 : 0);
+        formData.append('isNSFW', filedata.getAttribute('data-nsfw') == 'true' ? 1 : 0);
         formData.append('hcaptcha', captchaToken);
+        formData.append('tags', filedata.getAttribute('data-tags'));
 
         const uploadedElement = document.getElementById(`uploaded-${file.name}`);
         uploadedElement.innerHTML = '';
@@ -136,21 +196,21 @@ function uploadFiles() {
                         a.target = '_blank';
                         p.appendChild(a);
                         uploadResults.appendChild(p);
-                        uploadedElement.textContent = "✅";
+                        uploadedElement.textContent = "✅ Загружено";
                     } else {
-                        uploadedElement.textContent = "❌";
+                        uploadedElement.textContent = "❌ Ошибка загрузки";
                         const p = document.createElement('p');
                         p.textContent = `Ошибка загрузки ${file.name}: ${data.error}`;
                         uploadResults.appendChild(p);
                     }
                 } catch (e) {
-                    uploadedElement.textContent = "❌";
+                    uploadedElement.textContent = "❌ Ошибка обработки ответа";
                     const p = document.createElement('p');
-                    p.textContent = `Ошибка обработки ответа для ${file.name}`;
+                    p.textContent = `Ошибка обработки ответа для ${file.name}: ${e}`;
                     uploadResults.appendChild(p);
                 }
             } else {
-                uploadedElement.textContent = "❌";
+                uploadedElement.textContent = "❌ Ошибка HTTP";
                 const p = document.createElement('p');
                 p.textContent = `Ошибка HTTP ${xhr.status} при загрузке ${file.name}`;
                 uploadResults.appendChild(p);

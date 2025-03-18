@@ -29,7 +29,7 @@ $result = $mysqli->query($query);
     <tr>
         <td><?= $file['id'] ?></td>
         <td><?= htmlspecialchars($file['filename']) ?></td>
-        <td><a href="../../file/?name=<?= $file['filename'] ?>" target="_blank">▮▮▮▮▮</a></td>
+        <td><a href="../../file/?name=<?= $file['filename'] ?>" target="_blank">[ОТКРЫТЬ]</a></td>
         <td><?= $file['is_nsfw'] == 1 ? 'Да' : 'Нет' ?></td>
         <td><?= htmlspecialchars($file['username']) ?></td>
         <td><?= formatBytes($file['size']) ?></td>
@@ -37,7 +37,7 @@ $result = $mysqli->query($query);
         <td><?= $file['views'] ?></td>
         <td>
             <form action="delete_file.php" method="post"
-                  onsubmit="return confirm('Удалить файл?')">
+                    onsubmit="return confirm('Удалить файл?')">
                 <input type="hidden" name="file_id" value="<?= $file['id'] ?>">
                 <input type="hidden" name="filename" value="<?= $file['filename'] ?>">
                 <button type="submit">Удалить</button>

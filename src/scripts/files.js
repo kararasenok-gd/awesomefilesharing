@@ -114,6 +114,8 @@ function getFiles(sort = "id", order = "DESC") {
                     modalContentTemp.appendChild(pre);
                 }
 
+                modalContentTemp.appendChild(document.createElement('br'));
+
                 const openModal = document.createElement('a');
                 openModal.href = 'javascript:void(0)';
                 openModal.textContent = 'Подробнее';
@@ -267,9 +269,8 @@ function appendSortParams() {
     getFiles(sort, order);
 }
 
-const tagsSearch = document.getElementById('searchByTagsCount');
-
 function fetchTags(tag) {
+    const tagsSearch = document.getElementById('searchByTagsCount');
     let count = 0;
     const elements = document.getElementsByClassName('file');
     for (let i = 0; i < elements.length; i++) {
@@ -311,6 +312,7 @@ function init() {
 }
 
 function searchByTags() {
+    const tagsSearch = document.getElementById('searchByTagsCount');
     let search = document.getElementById('searchByTags').value;
 
     const elements = document.getElementsByClassName('file');
