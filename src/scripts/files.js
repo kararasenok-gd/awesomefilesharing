@@ -94,33 +94,34 @@ function getFiles(sort = "id", order = "DESC") {
 
                 modalContentTemp.appendChild(modal_buttons);
 
-                if (file.file_type.includes('image')) {
-                    const img = document.createElement('img');
-                    img.src = `../file/?name=${file.filename}&raw=1&ignore=1`;
-                    modalContentTemp.appendChild(img);
-                } else if (file.file_type.includes('video')) {
-                    const video = document.createElement('video');
-                    video.src = `../file/?name=${file.filename}&raw=1&ignore=1`;
-                    video.controls = true;
-                    modalContentTemp.appendChild(video);
-                } else if (file.file_type.includes('audio')) {
-                    const audio = document.createElement('audio');
-                    audio.src = `../file/?name=${file.filename}&raw=1&ignore=1`;
-                    audio.controls = true;
-                    modalContentTemp.appendChild(audio);
-                } else {
-                    const pre = document.createElement('pre');
-                    pre.textContent = "Тип файла не поддерживается";
-                    modalContentTemp.appendChild(pre);
-                }
-
-                modalContentTemp.appendChild(document.createElement('br'));
-
                 const openModal = document.createElement('a');
                 openModal.href = 'javascript:void(0)';
                 openModal.textContent = 'Подробнее';
+                
                 openModal.onclick = () => {
-                    showModal("Подробности файла", modalContentTemp.innerHTML, { closeButton: true }, `modal-${file.id}`);
+                    showModal("Подробности файла", modalContentTemp, { closeButton: true }, `modal-${file.id}`, () => {
+                        if (file.file_type.includes('image')) {
+                            const img = document.createElement('img');
+                            img.src = `../file/?name=${file.filename}&raw=1&ignore=1`;
+                            modalContentTemp.parentNode.appendChild(img);
+                        } else if (file.file_type.includes('video')) {
+                            const video = document.createElement('video');
+                            video.src = `../file/?name=${file.filename}&raw=1&ignore=1`;
+                            video.controls = true;
+                            modalContentTemp.parentNode.appendChild(video);
+                        } else if (file.file_type.includes('audio')) {
+                            const audio = document.createElement('audio');
+                            audio.src = `../file/?name=${file.filename}&raw=1&ignore=1`;
+                            audio.controls = true;
+                            modalContentTemp.parentNode.appendChild(audio);
+                        } else {
+                            const pre = document.createElement('pre');
+                            pre.textContent = "Тип файла не поддерживается";
+                            modalContentTemp.parentNode.appendChild(pre);
+                        }
+
+                        modalContentTemp.parentNode.appendChild(document.createElement('br'));
+                    });
                 }
 
 

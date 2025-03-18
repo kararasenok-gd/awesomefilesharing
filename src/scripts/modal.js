@@ -1,4 +1,4 @@
-function showModal(title, content = '', options = {}, modalid = '') {
+function showModal(title, content = '', options = {}, modalid = '', modalOnLoad = () => {}) {
     const { closeButton = true } = options;
     const modal = document.createElement('div');
     modal.className = 'modal show';
@@ -39,6 +39,8 @@ function showModal(title, content = '', options = {}, modalid = '') {
     modalBox.append(modalHeader, divider, modalContent);
     modal.appendChild(modalBox);
     document.body.appendChild(modal);
+
+    modalOnLoad();
     
     return modal;
 }
